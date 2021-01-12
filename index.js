@@ -1,17 +1,22 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const bodyParser =require('body-parser')
+const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
- })
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/adeu', (req, res) => {
-  res.send('<form method="POST" action=""> <input type="submit"></form> ')
- })
+app.get('/', (req,res) => {
+	res.send('<form method="post">\
+		<input name="nom" placeholder="el teu nom...">\
+		<input type="submit"/>\
+		</form>')
+})
 
-app.post('/adeu', (req, res) => {
-  res.send('Post Hell!')
- })
+app.post("/",function(req,res){
+	var nom=req.body.nom;
+	res.send("Hello "+nom);
+})
 
-app.listen(4000, () => console.log('Example app listening on port 4000!'));
+app.listen(port, () => {
+	console.log(`Example app listening at http://localhost:${port}`)
+})
